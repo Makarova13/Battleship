@@ -16,10 +16,16 @@ public class FieldCreation : MonoBehaviour
 
     private const int fieldSize = 10;
 
-    private void DrawBoard()
+    private void DrawField()
     {
         var startPosition = transform.position;
 
+        DrawCharacters(startPosition);
+        DrawBoard(startPosition);
+    }
+
+    private void DrawCharacters(Vector3 startPosition)
+    {
         float x = startPosition.x + 0.5f;
         float y = startPosition.y - 0.5f;
 
@@ -31,16 +37,19 @@ public class FieldCreation : MonoBehaviour
             Letters.GetComponent<Characters>().Index = i;
             letters[i] = Instantiate(Letters);
             letters[i].transform.position = new Vector3(x, startPosition.y, startPosition.z);
-            x+=0.5f;
+            x += 0.5f;
 
             Numbers.GetComponent<Characters>().Index = i;
             numbers[i] = Instantiate(Numbers);
             numbers[i].transform.position = new Vector3(startPosition.x, y, startPosition.z);
             y -= 0.5f;
         }
+    }
 
-        x = startPosition.x + 0.5f;
-        y = startPosition.y - 0.5f;
+    private void DrawBoard(Vector3 startPosition)
+    {
+        float x = startPosition.x + 0.5f;
+        float y = startPosition.y - 0.5f;
 
         cells = new GameObject[fieldSize, fieldSize];
 
@@ -62,7 +71,7 @@ public class FieldCreation : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        DrawBoard();
+        DrawField();
     }
 
     // Update is called once per frame
