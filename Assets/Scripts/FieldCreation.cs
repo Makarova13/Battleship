@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.Scripts.Models;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ public class FieldCreation : MonoBehaviour
     public GameObject Letters;
     public GameObject Numbers;
     public GameObject Cells;
+    public Field Field;
 
     private GameObject[] letters;
     private GameObject[] numbers;
@@ -50,6 +52,8 @@ public class FieldCreation : MonoBehaviour
         float y = startPosition.y - 0.5f;
 
         cells = new GameObject[fieldSize, fieldSize];
+        Field = new Field();
+        int cellIndex = 0;
 
         for (int i = 0; i < fieldSize; i++)
         {
@@ -63,6 +67,9 @@ public class FieldCreation : MonoBehaviour
                 cells[i, j].GetComponent<ClickOnCellProcessing>().cell.Parent = this.gameObject;
                 cells[i, j].GetComponent<ClickOnCellProcessing>().cell.X = i;
                 cells[i, j].GetComponent<ClickOnCellProcessing>().cell.Y = j;
+
+                Field.Cells[cellIndex] = cells[i, j].GetComponent<ClickOnCellProcessing>().cell;
+                cellIndex++;
             }
 
             x = startPosition.x + 0.5f;
@@ -80,8 +87,9 @@ public class FieldCreation : MonoBehaviour
         
     }
 
-    public void Click(int x, int y)
+    public void Click(int x, int y, CellState state)
     {
-        cells[x, y].GetComponent<Characters>().Index = 1;
+        cells[x, y].GetComponent<Characters>().Index = (int)state;
+        cells[x, y].GetComponent<ClickOnCellProcessing>().cell.State = state;
     }
 }

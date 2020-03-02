@@ -20,9 +20,12 @@ public class ClickOnCellProcessing : MonoBehaviour
 
     void OnMouseDown()
     {
-        if(cell.Parent != null)
+        if(cell != null)
         {
-            cell.Parent.GetComponent<FieldCreation>().Click(cell.X, cell.Y);
+            if (cell.Parent.GetComponent<FieldCreation>().Field.CheckIfShipCanBePlaced(cell.X, cell.Y))
+            {
+                cell.Parent.GetComponent<FieldCreation>().Click(cell.X, cell.Y, CellState.Boat);
+            }
         }
         else
         {
