@@ -5,9 +5,7 @@ using UnityEngine;
 public class FieldCreation : MonoBehaviour
 {
     public GameObject Letters;
-
     public GameObject Numbers;
-
     public GameObject Cells;
 
     private GameObject[] letters;
@@ -61,6 +59,10 @@ public class FieldCreation : MonoBehaviour
                 cells[i, j] = Instantiate(Cells);
                 cells[i, j].transform.position = new Vector3(x, y, startPosition.z);
                 x += 0.5f;
+
+                cells[i, j].GetComponent<ClickOnCellProcessing>().cell.Parent = this.gameObject;
+                cells[i, j].GetComponent<ClickOnCellProcessing>().cell.X = i;
+                cells[i, j].GetComponent<ClickOnCellProcessing>().cell.Y = j;
             }
 
             x = startPosition.x + 0.5f;
@@ -68,15 +70,18 @@ public class FieldCreation : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         DrawField();
     }
 
-    // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void Click(int x, int y)
+    {
+        cells[x, y].GetComponent<Characters>().Index = 1;
     }
 }
